@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.projectcollab.databinding.ActivityIntroBinding
 
 class IntroActivity : AppCompatActivity() {
@@ -13,22 +14,22 @@ class IntroActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intro)
 
+        Log.i("IntroActivity", "On Create")
+
         binding = ActivityIntroBinding.inflate(layoutInflater)
-//        val typeface: Typeface =
-//            Typeface.createFromAsset(assets, "carbon bl.ttf")
-//
-//        binding?.appIntroName?.typeface = typeface
+        val view = binding.root
+        setContentView(view)
 
         binding?.btnSignInIntro?.setOnClickListener {
 
             // Launch the sign in screen.
-            startActivity(Intent(this@IntroActivity, SignInActivity::class.java))
+            startActivity(Intent(this, SignInActivity::class.java))
         }
 
         binding?.btnSignUpIntro?.setOnClickListener {
-
+            Log.i("IntroActivity", "SignUpActivity")
             // Launch the sign up screen.
-            startActivity(Intent(this@IntroActivity, SignUpActivity::class.java))
+            startActivity(Intent(this, SignUpActivity::class.java))
         }
     }
 }
