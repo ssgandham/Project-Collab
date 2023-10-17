@@ -8,6 +8,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.core.view.get
 import com.example.projectcollab.databinding.ActivityMainBinding
 import com.example.projectcollab.databinding.ActivitySignInBinding
 import com.google.android.material.navigation.NavigationView
@@ -22,6 +23,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val view = binding.root
         setContentView(view)
         binding?.navView?.setNavigationItemSelectedListener(this)
+
+
+        setupActionBar()
 
     }
 
@@ -43,7 +47,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                 // Send the user to the intro screen of the application.
                 val intent = Intent(this, IntroActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
                 finish()
             }
@@ -51,6 +54,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         binding?.drawerLayout?.closeDrawer(GravityCompat.START)
         // END
         return true
+    }
+
+    private fun setupActionBar() {
+
+        setSupportActionBar(binding?.toolbarMainActivity)
+        binding?.toolbarMainActivity?.setNavigationIcon(R.drawable.ic_action_navigation_menu)
+
+        // TODO (Step 3: Add click event for navigation in the action bar and call the toggleDrawer function.)
+        // START
+        binding?.toolbarMainActivity?.setNavigationOnClickListener {
+            toggleDrawer()
+        }
+        // END
     }
 
     // TODO (Step 2: Create a function for opening and closing the Navigation Drawer.)

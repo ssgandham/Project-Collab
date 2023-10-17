@@ -29,7 +29,7 @@ class SignUpActivity : BaseActivity() {
         setContentView(view)
 
 
-//        setupActionBar()
+        setupActionBar()
 
         // Click event for sign-up button.
         binding?.btnSignUp?.setOnClickListener {
@@ -99,6 +99,19 @@ class SignUpActivity : BaseActivity() {
         }
     }
 
+
+    private fun setupActionBar() {
+
+        setSupportActionBar(binding?.toolbarSignUpActivity)
+
+        val actionBar = supportActionBar
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true)
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_black_color_back_24dp)
+        }
+
+        binding?.toolbarSignUpActivity?.setNavigationOnClickListener { onBackPressed() }
+    }
     /**
      * A function to be called the user is registered successfully and entry is made in the firestore database.
      */

@@ -25,6 +25,8 @@ class SignInActivity : BaseActivity() {
         val view = binding.root
         setContentView(view)
 
+        setupActionBar()
+
         binding?.btnSignIn?.setOnClickListener {
             signInRegisteredUser()
         }
@@ -72,6 +74,18 @@ class SignInActivity : BaseActivity() {
         }
     }
 
+        private fun setupActionBar() {
+
+            setSupportActionBar(binding?.toolbarSignInActivity)
+
+            val actionBar = supportActionBar
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(true)
+                actionBar.setHomeAsUpIndicator(R.drawable.ic_black_color_back_24dp)
+            }
+
+            binding?.toolbarSignInActivity?.setNavigationOnClickListener { onBackPressed() }
+        }
     /**
      * A function to get the user details from the firestore database after authentication.
      */
