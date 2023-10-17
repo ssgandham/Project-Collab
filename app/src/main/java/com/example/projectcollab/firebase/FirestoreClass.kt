@@ -9,6 +9,9 @@ import com.google.firebase.firestore.SetOptions
 import com.projemanag.model.User
 import com.projemanag.utils.Constants
 
+/**
+ * A custom class where we will add the operation performed for the firestore database.
+ */
 class FirestoreClass {
 
     // Create a instance of Firebase Firestore
@@ -27,7 +30,7 @@ class FirestoreClass {
             .addOnSuccessListener {
 
                 // Here call a function of base activity for transferring the result to it.
-                activity?.userRegisteredSuccess()
+                activity.userRegisteredSuccess()
             }
             .addOnFailureListener { e ->
                 Log.e(
@@ -58,7 +61,6 @@ class FirestoreClass {
 
                 // Here call a function of base activity for transferring the result to it.
                 activity.signInSuccess(loggedInUser)
-                // END
             }
             .addOnFailureListener { e ->
                 Log.e(
@@ -68,12 +70,20 @@ class FirestoreClass {
                 )
             }
     }
-    // END
 
     /**
      * A function for getting the user id of current logged user.
      */
     fun getCurrentUserID(): String {
-        return FirebaseAuth.getInstance().currentUser!!.uid
+        // An Instance of currentUser using FirebaseAuth
+        val currentUser = FirebaseAuth.getInstance().currentUser
+
+        // A variable to assign the currentUserId if it is not null or else it will be blank.
+        var currentUserID = ""
+        if (currentUser != null) {
+            currentUserID = currentUser.uid
+        }
+
+        return currentUserID
     }
 }

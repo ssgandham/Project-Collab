@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.projectcollab.R
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 
 open class BaseActivity : AppCompatActivity() {
 
@@ -24,5 +25,8 @@ open class BaseActivity : AppCompatActivity() {
         )
         snackBar.show()
     }
+
+    fun getCurrentUserID(): String {
+        return FirebaseAuth.getInstance().currentUser!!.uid
+    }
 }
-// END

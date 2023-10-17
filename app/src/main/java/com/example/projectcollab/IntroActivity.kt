@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.example.projectcollab.databinding.ActivityIntroBinding
+import com.example.projectcollab.databinding.ActivitySignInBinding
 
 class IntroActivity : AppCompatActivity() {
     private lateinit var binding: ActivityIntroBinding
@@ -13,8 +14,6 @@ class IntroActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intro)
-
-        Log.i("IntroActivity", "On Create")
 
         binding = ActivityIntroBinding.inflate(layoutInflater)
         val view = binding.root

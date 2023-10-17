@@ -4,8 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.MenuItem
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.core.view.GravityCompat
+import com.example.projectcollab.databinding.ActivityMainBinding
 import com.example.projectcollab.databinding.ActivitySignInBinding
 import com.example.projectcollab.databinding.ActivitySignUpBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -22,18 +25,11 @@ class SignInActivity : BaseActivity() {
         val view = binding.root
         setContentView(view)
 
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
-
-//        setupActionBar()
-
         binding?.btnSignIn?.setOnClickListener {
             signInRegisteredUser()
         }
-        // END
     }
+
     /**
      * A function for Sign-In using the registered user using the email and password.
      */
@@ -48,10 +44,8 @@ class SignInActivity : BaseActivity() {
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        // TODO (Step 2: Remove the toast message and call the FirestoreClass signInUser function to get the data of user from database. And also move the code of hiding Progress Dialog and Launching MainActivity to Success function.)
                         // Calling the FirestoreClass signInUser function to get the data of user from database.
                         FirestoreClass().signInUser(this@SignInActivity)
-                        // END
                     } else {
                         Toast.makeText(
                             this@SignInActivity,
@@ -78,14 +72,12 @@ class SignInActivity : BaseActivity() {
         }
     }
 
-    // TODO (Step 4: Create a function to get the user details from the firestore database after authentication.)
-    // START
     /**
      * A function to get the user details from the firestore database after authentication.
      */
     fun signInSuccess(user: User) {
 
         startActivity(Intent(this@SignInActivity, MainActivity::class.java))
-        finish()
+        this.finish()
     }
 }
