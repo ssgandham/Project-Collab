@@ -1,6 +1,9 @@
 package com.projemanag.firebase
 
+import android.app.Activity
 import android.util.Log
+import com.example.projectcollab.MainActivity
+import com.example.projectcollab.MyProfile
 import com.example.projectcollab.SignInActivity
 import com.example.projectcollab.SignUpActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -44,7 +47,7 @@ class FirestoreClass {
     /**
      * A function to SignIn using firebase and get the user details from Firestore Database.
      */
-    fun signInUser(activity: SignInActivity) {
+    fun signInUser(activity: Activity) {
 
         // Here we pass the collection name from which we wants the data.
         mFireStore.collection(Constants.USERS)
@@ -52,15 +55,26 @@ class FirestoreClass {
             .document(getCurrentUserID())
             .get()
             .addOnSuccessListener { document ->
-                Log.e(
-                    activity.javaClass.simpleName, document.toString()
-                )
+                Log.e(activity.javaClass.simpleName, document.toString())
 
                 // Here we have received the document snapshot which is converted into the User Data model object.
                 val loggedInUser = document.toObject(User::class.java)!!
 
+                // TODO(Step 3: Modify the parameter and check the instance of activity and send the success result to it.)
+                // START
                 // Here call a function of base activity for transferring the result to it.
-                activity.signInSuccess(loggedInUser)
+                when (activity) {
+                    is SignInActivity -> {
+                        activity.signInSuccess(loggedInUser)
+                    }
+                    is MainActivity -> {
+                        activity.updateNavigationUserDetails(loggedInUser)
+                    }
+                    is MyProfile -> {
+                        activity.setUserDataInUI(loggedInUser)
+                    }
+                }
+                // END
             }
             .addOnFailureListener { e ->
                 Log.e(

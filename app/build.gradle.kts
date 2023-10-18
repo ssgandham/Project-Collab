@@ -54,9 +54,11 @@ dependencies {
     implementation ("com.google.firebase:firebase-auth:19.2.0")
     // Firebase Cloud Firestore Dependency
     implementation ("com.google.firebase:firebase-firestore:21.4.0")
-    // TODO (Step 7: Add the circular image view dependency.)
     // circular image view dependency
     implementation ("de.hdodenhof:circleimageview:3.1.0")
+    // Image loading library
+    implementation ("com.github.bumptech.glide:glide:4.11.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.11.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     testImplementation("junit:junit:4.13.2")
