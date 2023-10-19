@@ -1,12 +1,8 @@
 package com.example.projectcollab
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
-import android.view.WindowManager
 import android.widget.Toast
-import com.example.projectcollab.databinding.ActivityIntroBinding
 import com.example.projectcollab.databinding.ActivitySignUpBinding
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult

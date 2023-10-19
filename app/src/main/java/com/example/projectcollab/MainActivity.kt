@@ -1,22 +1,17 @@
 package com.example.projectcollab
 
 import android.content.Intent
-import android.graphics.Typeface
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.core.view.get
 import com.bumptech.glide.Glide
 import com.example.projectcollab.databinding.ActivityMainBinding
-import com.example.projectcollab.databinding.ActivitySignInBinding
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.projemanag.activities.BaseActivity
+import com.projemanag.firebase.FirestoreClass
 import com.projemanag.model.User
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -28,9 +23,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         val view = binding.root
         setContentView(view)
         binding?.navView?.setNavigationItemSelectedListener(this)
-
-
         setupActionBar()
+        FirestoreClass().loadUserData(this@MainActivity)
+
 
     }
 
@@ -43,7 +38,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         when (menuItem.itemId) {
             R.id.nav_my_profile -> {
 
-                startActivity(Intent(this@MainActivity, MyProfile::class.java))
+                startActivity(Intent(this@MainActivity, MyProfileActivity::class.java))
             }
 
             R.id.nav_sign_out -> {

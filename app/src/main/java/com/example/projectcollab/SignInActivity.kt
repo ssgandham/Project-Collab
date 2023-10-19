@@ -1,16 +1,10 @@
 package com.example.projectcollab
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.MenuItem
-import android.view.WindowManager
 import android.widget.Toast
-import androidx.core.view.GravityCompat
-import com.example.projectcollab.databinding.ActivityMainBinding
 import com.example.projectcollab.databinding.ActivitySignInBinding
-import com.example.projectcollab.databinding.ActivitySignUpBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.projemanag.activities.BaseActivity
 import com.projemanag.firebase.FirestoreClass
@@ -47,7 +41,7 @@ class SignInActivity : BaseActivity() {
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         // Calling the FirestoreClass signInUser function to get the data of user from database.
-                        FirestoreClass().signInUser(this)
+                        FirestoreClass().loadUserData(this@SignInActivity)
                     } else {
                         Toast.makeText(
                             this,
