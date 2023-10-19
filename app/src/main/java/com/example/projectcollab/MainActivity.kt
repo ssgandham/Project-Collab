@@ -2,10 +2,12 @@ package com.example.projectcollab
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.GravityCompat
+import androidx.core.view.get
 import com.bumptech.glide.Glide
 import com.example.projectcollab.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
@@ -13,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.projemanag.activities.BaseActivity
 import com.projemanag.firebase.FirestoreClass
 import com.projemanag.model.User
+import com.example.projectcollab.databinding.AppBarMainBinding
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var binding: ActivityMainBinding
@@ -22,7 +25,17 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        Log.d("MainActivity", "Before FAB clicked")
+        binding?.fabCreateBoardNew?.setOnClickListener {
+            Log.d("MainActivity", "FAB clicked")
+            startActivity(Intent(this@MainActivity, CreateBoardActivity::class.java))
+        }
+
         binding?.navView?.setNavigationItemSelectedListener(this)
+
+
+
         setupActionBar()
         FirestoreClass().loadUserData(this@MainActivity)
 
