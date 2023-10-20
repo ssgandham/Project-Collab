@@ -10,7 +10,9 @@ import android.widget.TextView
 import androidx.core.view.GravityCompat
 import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.projectcollab.adapters.CustomAdapter
 import com.example.projectcollab.databinding.ActivityItemsBoardBinding
 import com.example.projectcollab.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
@@ -19,21 +21,16 @@ import com.projemanag.activities.BaseActivity
 import com.projemanag.firebase.FirestoreClass
 import com.projemanag.model.User
 import com.example.projectcollab.databinding.AppBarMainBinding
-import com.example.projectcollab.databinding.ContentMainBinding
 import com.example.projectcollab.model.Board
-import com.projemanag.adapters.BoardItemsAdapter
 import com.projemanag.utils.Constants
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var bindingContentMain: ContentMainBinding
     private lateinit var mUserName: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
-        bindingContentMain = ContentMainBinding.inflate(layoutInflater)
-        bindingContentMain
         val view = binding.root
         setContentView(view)
 
@@ -152,22 +149,20 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
      * A function to populate the result of BOARDS list in the UI i.e in the recyclerView.
      */
     fun populateBoardsListToUI(boardsList: ArrayList<Board>) {
+        // This will pass the ArrayList to our Adapter
+        val adapter = CustomAdapter(this@MainActivity, boardsList)
 
-        if (boardsList.size > 0) {
+        // Setting the Adapter with the recyclerview
+        // getting the recyclerview by its id
+        val recyclerview = findViewById<RecyclerView>(R.id.recyclerview)
 
-            bindingContentMain?.rvBoardsList?.visibility = View.VISIBLE
-            bindingContentMain?.tvNoBoardsAvailable?.visibility = View.GONE
+        // this creates a vertical layout Manager
+        recyclerview.layoutManager = LinearLayoutManager(this)
+        recyclerview.adapter = adapter
 
-            bindingContentMain?.rvBoardsList?.layoutManager = LinearLayoutManager(this@MainActivity)
-            bindingContentMain?.rvBoardsList?.setHasFixedSize(true)
-
-            // Create an instance of BoardItemsAdapter and pass the boardList to it.
-            val adapter = BoardItemsAdapter(this@MainActivity, boardsList)
-            bindingContentMain?.rvBoardsList?.adapter = adapter // Attach the adapter to the recyclerView.
-        } else {
-            bindingContentMain?.rvBoardsList?.visibility = View.GONE
-            bindingContentMain?.tvNoBoardsAvailable?.visibility = View.VISIBLE
-        }
+//            // Create an instance of BoardItemsAdapter and pass the boardList to it.
+//            val adapter = BoardItemsAdapter(this@MainActivity, boardsList)
+//            binding?.rvBoardsList?.adapter = adapter // Attach the adapter to the recyclerView.
     }
     // END
 

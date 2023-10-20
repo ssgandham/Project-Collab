@@ -1,8 +1,10 @@
 package com.projemanag.firebase
 
 import android.app.Activity
+import android.content.Intent
 import android.util.Log
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import com.example.projectcollab.CreateBoardActivity
 import com.example.projectcollab.MainActivity
 import com.example.projectcollab.MyProfileActivity
@@ -52,7 +54,7 @@ class FirestoreClass {
     /**
      * A function to SignIn using firebase and get the user details from Firestore Database.
      */
-    fun loadUserData(activity: Activity, isToReadBoardsList: Boolean = false) {
+    fun loadUserData(activity: Activity) {
 
         // Here we pass the collection name from which we wants the data.
         mFireStore.collection(Constants.USERS)
@@ -127,8 +129,7 @@ class FirestoreClass {
                 Log.e(activity.javaClass.simpleName, "Board created successfully.")
 
                 Toast.makeText(activity, "Board created successfully.", Toast.LENGTH_SHORT).show()
-
-                activity.boardCreatedSuccessfully()
+//                activity.boardCreatedSuccessfully()
             }
             .addOnFailureListener { e ->
                 Log.e(
