@@ -1,17 +1,20 @@
 package com.projemanag.firebase
 
 import android.app.Activity
+import android.content.Intent
 import android.util.Log
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import com.example.projectcollab.CreateBoardActivity
 import com.example.projectcollab.MainActivity
 import com.example.projectcollab.MyProfileActivity
 import com.example.projectcollab.SignInActivity
 import com.example.projectcollab.SignUpActivity
+import com.example.projectcollab.model.Board
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
-import com.projemanag.model.Board
+import com.projemanag.activities.*
 import com.projemanag.model.User
 import com.projemanag.utils.Constants
 
@@ -47,6 +50,7 @@ class FirestoreClass {
             }
     }
 
+    // TODO (Step 5: Add a parameter to check whether to read the boards list or not.)
     /**
      * A function to SignIn using firebase and get the user details from Firestore Database.
      */
@@ -77,6 +81,9 @@ class FirestoreClass {
                 }
             }
             .addOnFailureListener { e ->
+                // Here call a function of base activity for transferring the result to it.
+                when (activity) {
+                }
                 Log.e(
                     activity.javaClass.simpleName,
                     "Error while getting loggedIn user details",
@@ -122,8 +129,7 @@ class FirestoreClass {
                 Log.e(activity.javaClass.simpleName, "Board created successfully.")
 
                 Toast.makeText(activity, "Board created successfully.", Toast.LENGTH_SHORT).show()
-
-                activity.boardCreatedSuccessfully()
+//                activity.boardCreatedSuccessfully()
             }
             .addOnFailureListener { e ->
                 Log.e(
@@ -133,6 +139,42 @@ class FirestoreClass {
                 )
             }
     }
+
+    // TODO (Step 4: Create a function to get the list of created boards from the database.)
+    // START
+    /**
+     * A function to get the list of created boards from the database.
+     */
+    fun getBoardsList(activity: MainActivity) {
+
+        // The collection name for BOARDS
+        mFireStore.collection(Constants.BOARDS)
+            // A where array query as we want the list of the board in which the user is assigned. So here you can pass the current user id.
+            .whereArrayContains(Constants.ASSIGNED_TO, getCurrentUserID())
+            .get() // Will get the documents snapshots.
+            .addOnSuccessListener { document ->
+                // Here we get the list of boards in the form of documents.
+                Log.e(activity.javaClass.simpleName, document.documents.toString())
+                // Here we have created a new instance for Boards ArrayList.
+                val boardsList: ArrayList<Board> = ArrayList()
+
+                // A for loop as per the list of documents to convert them into Boards ArrayList.
+                for (i in document.documents) {
+
+                    val board = i.toObject(Board::class.java)!!
+                    board.documentId = i.id
+
+                    boardsList.add(board)
+                }
+
+                // Here pass the result to the base activity.
+                activity.populateBoardsListToUI(boardsList)
+            }
+            .addOnFailureListener { e ->
+                Log.e(activity.javaClass.simpleName, "Error while creating a board.", e)
+            }
+    }
+    // END
 
     /**
      * A function for getting the user id of current logged user.

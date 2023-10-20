@@ -4,11 +4,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.GravityCompat
 import androidx.core.view.get
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.projectcollab.adapters.CustomAdapter
+import com.example.projectcollab.databinding.ActivityItemsBoardBinding
 import com.example.projectcollab.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -16,6 +21,7 @@ import com.projemanag.activities.BaseActivity
 import com.projemanag.firebase.FirestoreClass
 import com.projemanag.model.User
 import com.example.projectcollab.databinding.AppBarMainBinding
+import com.example.projectcollab.model.Board
 import com.projemanag.utils.Constants
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -34,11 +40,13 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             startActivity(Intent(this@MainActivity, CreateBoardActivity::class.java))
         }
 
+        setupActionBar()
+
         binding?.navView?.setNavigationItemSelectedListener(this)
 
 
 
-        setupActionBar()
+
         FirestoreClass().loadUserData(this@MainActivity)
 
         binding?.fabCreateBoardNew?.setOnClickListener {
@@ -104,6 +112,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }
     }
 
+    // TODO (Step 7: Add a parameter to check whether to read the boards list or not.)
     /**
      * A function to get the current user details from firebase.
      */
@@ -129,5 +138,39 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         val navUsername = headerView.findViewById<TextView>(R.id.tv_username)
         // Set the user name
         navUsername.text = user.name
+
+        FirestoreClass().getBoardsList(this@MainActivity)
+
+    }
+
+    // TODO (Step 1: Create a function to populate the result of BOARDS list in the UI i.e in the recyclerView.)
+    // START
+    /**
+     * A function to populate the result of BOARDS list in the UI i.e in the recyclerView.
+     */
+    fun populateBoardsListToUI(boardsList: ArrayList<Board>) {
+        // This will pass the ArrayList to our Adapter
+        val adapter = CustomAdapter(this@MainActivity, boardsList)
+
+        // Setting the Adapter with the recyclerview
+        // getting the recyclerview by its id
+        val recyclerview = findViewById<RecyclerView>(R.id.recyclerview)
+
+        // this creates a vertical layout Manager
+        recyclerview.layoutManager = LinearLayoutManager(this)
+        recyclerview.adapter = adapter
+
+//            // Create an instance of BoardItemsAdapter and pass the boardList to it.
+//            val adapter = BoardItemsAdapter(this@MainActivity, boardsList)
+//            binding?.rvBoardsList?.adapter = adapter // Attach the adapter to the recyclerView.
+    }
+    // END
+
+    /**
+     * A companion object to declare the constants.
+     */
+    companion object {
+        //A unique code for starting the activity for result
+        const val MY_PROFILE_REQUEST_CODE: Int = 11
     }
 }
