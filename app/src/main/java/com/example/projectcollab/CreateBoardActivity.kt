@@ -1,24 +1,18 @@
 package com.example.projectcollab
 
-import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.projectcollab.databinding.ActivityCreateBoardBinding
-import com.example.projectcollab.databinding.ActivitySignInBinding
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.projemanag.activities.BaseActivity
 import com.projemanag.firebase.FirestoreClass
-import com.projemanag.model.Board
+import com.example.projectcollab.model.Board
 import com.projemanag.utils.Constants
 import java.io.IOException
 

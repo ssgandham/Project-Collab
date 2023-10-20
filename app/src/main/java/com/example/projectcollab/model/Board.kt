@@ -1,4 +1,4 @@
-package com.projemanag.model
+package com.example.projectcollab.model
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -7,13 +7,15 @@ data class Board(
     val name: String = "",
     val image: String = "",
     val createdBy: String = "",
-    val assignedTo: ArrayList<String> = ArrayList()
+    val assignedTo: ArrayList<String> = ArrayList(),
+    var documentId: String = ""
 ) : Parcelable {
     constructor(source: Parcel) : this(
         source.readString()!!,
         source.readString()!!,
         source.readString()!!,
-        source.createStringArrayList()!!
+        source.createStringArrayList()!!,
+        source.readString()!!
     )
 
     override fun describeContents() = 0
@@ -23,6 +25,7 @@ data class Board(
         writeString(image)
         writeString(createdBy)
         writeStringList(assignedTo)
+        writeString(documentId)
     }
 
     companion object {
