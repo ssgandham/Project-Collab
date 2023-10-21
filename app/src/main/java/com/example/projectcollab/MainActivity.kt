@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.projectcollab.adapters.CustomAdapter
+import com.example.projectcollab.adapters.TestAdapter
 import com.example.projectcollab.databinding.ActivityItemsBoardBinding
 import com.example.projectcollab.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
@@ -150,15 +151,22 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
      */
     fun populateBoardsListToUI(boardsList: ArrayList<Board>) {
         // This will pass the ArrayList to our Adapter
-        val adapter = CustomAdapter(this@MainActivity, boardsList)
+        val adapter = TestAdapter(this@MainActivity, boardsList)
 
-        // Setting the Adapter with the recyclerview
+        // Setting the Adapter with the recyclerview Z
         // getting the recyclerview by its id
         val recyclerview = findViewById<RecyclerView>(R.id.recyclerview)
 
         // this creates a vertical layout Manager
         recyclerview.layoutManager = LinearLayoutManager(this)
         recyclerview.adapter = adapter
+
+        adapter.SetOnClickListener(object :
+            TestAdapter.OnClickListener {
+            override fun onClick(position: Int, model: Board) {
+                Log.i("Clicked", "Clicked")
+            }
+        })
 
 //            // Create an instance of BoardItemsAdapter and pass the boardList to it.
 //            val adapter = BoardItemsAdapter(this@MainActivity, boardsList)
